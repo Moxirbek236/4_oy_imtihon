@@ -14,6 +14,9 @@ import {
   UploadedFiles,
   BadRequestException,
   Put,
+  NotFoundException,
+  StreamableFile,
+  Res,
 } from '@nestjs/common';
 import {
   FileFieldsInterceptor,
@@ -36,8 +39,10 @@ import { RolesGuard } from 'src/common/guards/roles/roles.guard';
 import { Roles } from 'src/common/decorators/roles/roles.decorator';
 import { Role, SubscriptionType } from '@prisma/client';
 import { extname } from 'path';
-import { fstat, fsync } from 'fs';
 import { diskStorage } from 'multer';
+import * as fs from 'fs';
+import * as path from 'path';
+import type { Response } from 'express';
 
 @ApiTags('Movies')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -153,6 +158,57 @@ export class MoviesController {
     );
   }
 
+  @Get(':id/watch')
+  @Roles(Role.ADMIN, Role.SUPERADMIN, Role.USER)
+  @ApiOperation({ summary: 'Movie watch (stream)' })
+  @ApiResponse({ status: 200, description: 'Stream movie' })
+  async watchMovie(
+    @Param('id') id: string,
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const movie = await this.moviesService.getMovieForAccess(
+      id,
+      req['user'].id,
+    );
+
+    const filePath = movie.movieFiles[0].fileUrl;
+    if (!fs.existsSync(filePath)) {
+      throw new NotFoundException('Fayl topilmadi');
+    }
+
+    const file = fs.createReadStream(filePath);
+
+    res.set({
+      'Content-Type': 'video/mp4',
+      'Content-Disposition': 'inline',
+    });
+
+    return new StreamableFile(file);
+  }
+
+  @Get(':id/download')
+  @Roles(Role.ADMIN, Role.SUPERADMIN, Role.USER)
+  @ApiOperation({ summary: 'Movie download' })
+  @ApiResponse({ status: 200, description: 'Download movie' })
+  async downloadMovie(
+    @Param('id') id: string,
+    @Req() req: Request,
+    @Res() res: Response,
+  ) {
+    const movie = await this.moviesService.getMovieForAccess(
+      id,
+      req['user'].id,
+    );
+
+    const filePath = movie.movieFiles[0].fileUrl;
+
+    if (!fs.existsSync(filePath)) {
+      throw new NotFoundException('Fayl topilmadi');
+    }
+
+    return res.download(filePath);
+  }
   @Get('user')
   @Roles(Role.ADMIN, Role.SUPERADMIN, Role.USER)
   @ApiOperation({ summary: `${Role.ADMIN}, ${Role.SUPERADMIN}, ${Role.USER}` })

@@ -3,6 +3,7 @@ import {
   NotFoundException,
   ConflictException,
   BadRequestException,
+  ForbiddenException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateMovieDto } from './dto/create-movie.dto';
@@ -322,6 +323,44 @@ export class MoviesService {
         },
       };
     }
+  }
+
+  async getMovieForAccess(movieId: string, userId: string) {
+    const movie = await this.prisma.movie.findUnique({
+      where: { id: movieId },
+      include: {
+        movieFiles: true,
+      },
+    });
+
+    if (!movie) {
+      throw new NotFoundException('Movie topilmadi');
+    }
+
+    if (!movie.movieFiles.length) {
+      throw new NotFoundException('Movie file mavjud emas');
+    }
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select:{userSubscriptions:{select:{subscriptionPlans:{select:{name:true}}}}}
+    });
+
+    if (!user) {
+      throw new NotFoundException('User topilmadi');
+    }
+
+    
+
+    if (
+      movie.subscriptionType === 'premium' &&
+      user.userSubscriptions[0].subscriptionPlans.name !== SubscriptionType.premium
+    ) {
+      throw new ForbiddenException('Premium obuna talab qilinadi');
+    }
+
+
+    return movie;
   }
 
   async update(

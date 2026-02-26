@@ -7,20 +7,20 @@ export declare class MoviesService {
     create(createMovieDto: CreateMovieDto, created_by: string, movi_url?: any, poster_url?: any): Promise<{
         success: boolean;
         data: {
-            description: string | null;
-            title: string;
             id: string;
-            createdAt: Date;
-            rating: import("@prisma/client-runtime-utils").Decimal | null;
-            created_by: string;
+            title: string;
             slug: string;
+            description: string | null;
             releaseYear: number;
             durationMinutes: number;
+            rating: import("@prisma/client-runtime-utils").Decimal | null;
             viewCount: number;
+            createdAt: Date;
             creators: {
-                username: string;
                 id: string;
+                username: string;
             };
+            created_by: string;
         };
     }>;
     findAll(subscriptionType?: string, search?: string, categoryId?: string, page?: number, limit?: number): Promise<{
@@ -29,12 +29,12 @@ export declare class MoviesService {
             movies: ({
                 movieCategories: ({
                     categories: {
-                        name: string;
-                        description: string;
                         id: string;
+                        slug: string;
+                        description: string;
                         createdAt: Date;
                         updatedAt: Date;
-                        slug: string;
+                        name: string;
                     };
                 } & {
                     id: string;
@@ -44,23 +44,23 @@ export declare class MoviesService {
                     category_id: string;
                 })[];
                 creators: {
-                    username: string;
                     id: string;
+                    username: string;
                 };
             } & {
-                description: string | null;
-                title: string;
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                rating: import("@prisma/client-runtime-utils").Decimal | null;
-                created_by: string;
+                title: string;
                 slug: string;
+                description: string | null;
                 releaseYear: number;
                 durationMinutes: number;
                 posterUrl: string | null;
+                rating: import("@prisma/client-runtime-utils").Decimal | null;
                 subscriptionType: import("@prisma/client").$Enums.SubscriptionType;
                 viewCount: number;
+                createdAt: Date;
+                updatedAt: Date;
+                created_by: string;
             })[];
             pagination: {
                 total: number;
@@ -74,19 +74,19 @@ export declare class MoviesService {
         success: boolean;
         data: {
             movies: {
-                description: string | null;
-                title: string;
                 id: string;
-                createdAt: Date;
-                updatedAt: Date;
-                rating: import("@prisma/client-runtime-utils").Decimal | null;
-                created_by: string;
+                title: string;
                 slug: string;
+                description: string | null;
                 releaseYear: number;
                 durationMinutes: number;
                 posterUrl: string | null;
+                rating: import("@prisma/client-runtime-utils").Decimal | null;
                 subscriptionType: import("@prisma/client").$Enums.SubscriptionType;
                 viewCount: number;
+                createdAt: Date;
+                updatedAt: Date;
+                created_by: string;
             }[];
             pagination: {
                 total: number;
@@ -100,27 +100,52 @@ export declare class MoviesService {
         success: boolean;
         data: any;
     } | undefined>;
+    getMovieForAccess(movieId: string, userId: string): Promise<{
+        movieFiles: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            movie_id: string;
+            fileUrl: string;
+            quality: string;
+            language: string;
+        }[];
+    } & {
+        id: string;
+        title: string;
+        slug: string;
+        description: string | null;
+        releaseYear: number;
+        durationMinutes: number;
+        posterUrl: string | null;
+        rating: import("@prisma/client-runtime-utils").Decimal | null;
+        subscriptionType: import("@prisma/client").$Enums.SubscriptionType;
+        viewCount: number;
+        createdAt: Date;
+        updatedAt: Date;
+        created_by: string;
+    }>;
     update(id: string, updateMovieDto: UpdateMovieDto, movie_url: any, post_url: any): Promise<{
         success: boolean;
         data: {
             creators: {
-                username: string;
                 id: string;
+                username: string;
             };
         } & {
-            description: string | null;
-            title: string;
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            rating: import("@prisma/client-runtime-utils").Decimal | null;
-            created_by: string;
+            title: string;
             slug: string;
+            description: string | null;
             releaseYear: number;
             durationMinutes: number;
             posterUrl: string | null;
+            rating: import("@prisma/client-runtime-utils").Decimal | null;
             subscriptionType: import("@prisma/client").$Enums.SubscriptionType;
             viewCount: number;
+            createdAt: Date;
+            updatedAt: Date;
+            created_by: string;
         };
     }>;
     remove(id: string): Promise<{

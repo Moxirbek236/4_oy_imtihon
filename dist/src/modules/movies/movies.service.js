@@ -273,6 +273,32 @@ let MoviesService = class MoviesService {
             };
         }
     }
+    async getMovieForAccess(movieId, userId) {
+        const movie = await this.prisma.movie.findUnique({
+            where: { id: movieId },
+            include: {
+                movieFiles: true,
+            },
+        });
+        if (!movie) {
+            throw new common_1.NotFoundException('Movie topilmadi');
+        }
+        if (!movie.movieFiles.length) {
+            throw new common_1.NotFoundException('Movie file mavjud emas');
+        }
+        const user = await this.prisma.user.findUnique({
+            where: { id: userId },
+            select: { userSubscriptions: { select: { subscriptionPlans: { select: { name: true } } } } }
+        });
+        if (!user) {
+            throw new common_1.NotFoundException('User topilmadi');
+        }
+        if (movie.subscriptionType === 'premium' &&
+            user.userSubscriptions[0].subscriptionPlans.name !== client_1.SubscriptionType.premium) {
+            throw new common_1.ForbiddenException('Premium obuna talab qilinadi');
+        }
+        return movie;
+    }
     async update(id, updateMovieDto, movie_url, post_url) {
         const movie = await this.prisma.movie.findUnique({ where: { id } });
         if (!movie) {

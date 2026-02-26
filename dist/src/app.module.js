@@ -22,6 +22,8 @@ const auth_module_1 = require("./auth/auth.module");
 const prisma_module_1 = require("./prisma/prisma.module");
 const category_module_1 = require("./modules/category/category.module");
 const watchhistory_module_1 = require("./modules/watchhistory/watchhistory.module");
+const serve_static_1 = require("@nestjs/serve-static");
+const path_1 = require("path");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -35,6 +37,10 @@ exports.AppModule = AppModule = __decorate([
                 global: true,
                 secret: process.env.JWT_SECRET || 'shaftoli',
                 signOptions: { expiresIn: '7d' },
+            }),
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: (0, path_1.join)(process.cwd(), '..', 'uploads'),
+                serveRoot: '/uploads',
             }),
             prisma_module_1.PrismaModule,
             auth_module_1.AuthModule,
