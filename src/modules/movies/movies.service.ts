@@ -343,18 +343,24 @@ export class MoviesService {
 
     const user = await this.prisma.user.findUnique({
       where: { id: userId },
-      select:{userSubscriptions:{select:{subscriptionPlans:{select:{name:true}}}}}
+      select:{userSubscriptions:{
+        select:{subscriptionPlans:{select:{name:true, id:true}}},
+        orderBy:{createdAt:"desc"},
+      }}
     });
+
+    const plans = await this.prisma.subscriptionPlan.findFirst({
+      where:{name:user?.userSubscriptions[0].subscriptionPlans.name}
+    })
 
     if (!user) {
       throw new NotFoundException('User topilmadi');
     }
-
     
 
     if (
-      movie.subscriptionType === 'premium' &&
-      user.userSubscriptions[0].subscriptionPlans.name !== SubscriptionType.premium
+      movie.subscriptionType ===  SubscriptionType.premium &&
+      user.userSubscriptions[0].subscriptionPlans.name !== plans?.name
     ) {
       throw new ForbiddenException('Premium obuna talab qilinadi');
     }

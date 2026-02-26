@@ -167,8 +167,8 @@ __decorate([
 ], MoviesController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)('admin'),
-    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN, client_1.Role.SUPERADMIN, client_1.Role.USER),
-    (0, swagger_1.ApiOperation)({ summary: `${client_1.Role.ADMIN}, ${client_1.Role.SUPERADMIN}, ${client_1.Role.USER}` }),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN, client_1.Role.SUPERADMIN),
+    (0, swagger_1.ApiOperation)({ summary: `${client_1.Role.ADMIN}, ${client_1.Role.SUPERADMIN}` }),
     (0, swagger_1.ApiQuery)({
         name: 'subscriptionType',
         required: false,

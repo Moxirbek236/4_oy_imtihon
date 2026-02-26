@@ -8,28 +8,26 @@ export declare class ProfilesController {
         success: boolean;
         data: {
             id: string;
+            user_id: string;
+            fullName: string;
+            phone: string | null;
+            country: string;
             createdAt: Date;
             updatedAt: Date;
             users: {
-                favorites: {
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    movie_id: string;
-                }[];
+                id: string;
+                createdAt: Date;
                 email: string;
                 role: import("@prisma/client").$Enums.Role;
                 avatarUrl: string | null;
-                id: string;
-                createdAt: Date;
                 userSubscriptions: {
                     id: string;
                     createdAt: Date;
                     endDate: Date | null;
                     autoRenew: boolean;
                     subscriptionPlans: {
-                        name: string;
                         id: string;
+                        name: string;
                         price: import("@prisma/client-runtime-utils").Decimal;
                         features: import("@prisma/client/runtime/client").JsonValue;
                         isActive: boolean;
@@ -46,6 +44,27 @@ export declare class ProfilesController {
                     }[];
                 }[];
                 movies: {
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
+                    reviews: {
+                        id: string;
+                        user_id: string;
+                        createdAt: Date;
+                        updatedAt: Date;
+                        movie_id: string;
+                        rating: number;
+                        comment: string | null;
+                    }[];
+                    rating: import("@prisma/client-runtime-utils").Decimal | null;
+                    created_by: string;
+                    title: string;
+                    slug: string;
+                    description: string | null;
+                    releaseYear: number;
+                    durationMinutes: number;
+                    posterUrl: string | null;
+                    subscriptionType: import("@prisma/client").$Enums.SubscriptionType;
                     movieCategories: {
                         id: string;
                         createdAt: Date;
@@ -53,46 +72,31 @@ export declare class ProfilesController {
                         movie_id: string;
                         category_id: string;
                     }[];
-                    description: string | null;
-                    title: string;
-                    id: string;
-                    createdAt: Date;
-                    updatedAt: Date;
-                    reviews: {
-                        id: string;
-                        createdAt: Date;
-                        updatedAt: Date;
-                        user_id: string;
-                        movie_id: string;
-                        rating: number;
-                        comment: string | null;
-                    }[];
-                    rating: import("@prisma/client-runtime-utils").Decimal | null;
-                    created_by: string;
-                    slug: string;
-                    releaseYear: number;
-                    durationMinutes: number;
-                    posterUrl: string | null;
-                    subscriptionType: import("@prisma/client").$Enums.SubscriptionType;
                     movieFiles: {
                         id: string;
                         createdAt: Date;
                         updatedAt: Date;
                         movie_id: string;
+                        fileUrl: string;
                         quality: string;
                         language: string;
-                        fileUrl: string;
                     }[];
                     creators: {
-                        username: string;
-                        email: string;
-                        role: import("@prisma/client").$Enums.Role;
-                        avatarUrl: string | null;
                         id: string;
-                        passwordHash: string;
                         createdAt: Date;
                         updatedAt: Date;
+                        username: string;
+                        email: string;
+                        passwordHash: string;
+                        role: import("@prisma/client").$Enums.Role;
+                        avatarUrl: string | null;
                     };
+                }[];
+                favorites: {
+                    id: string;
+                    createdAt: Date;
+                    updatedAt: Date;
+                    movie_id: string;
                 }[];
                 reviews: {
                     id: string;
@@ -109,28 +113,24 @@ export declare class ProfilesController {
                     lastWatched: Date;
                 }[];
             };
-            user_id: string;
-            fullName: string;
-            phone: string | null;
-            country: string;
         } | null;
     }>;
     update(req: Request, updateProfileDto: UpdateProfileDto, file?: Express.Multer.File): Promise<{
         success: boolean;
         data: {
             users: {
+                id: string;
                 username: string;
                 email: string;
-                id: string;
             };
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
             user_id: string;
             fullName: string;
             phone: string | null;
             country: string;
+            createdAt: Date;
+            updatedAt: Date;
         };
     }>;
     remove(req: Request): Promise<{

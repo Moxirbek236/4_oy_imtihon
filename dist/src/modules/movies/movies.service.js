@@ -288,13 +288,19 @@ let MoviesService = class MoviesService {
         }
         const user = await this.prisma.user.findUnique({
             where: { id: userId },
-            select: { userSubscriptions: { select: { subscriptionPlans: { select: { name: true } } } } }
+            select: { userSubscriptions: {
+                    select: { subscriptionPlans: { select: { name: true, id: true } } },
+                    orderBy: { createdAt: "desc" },
+                } }
+        });
+        const plans = await this.prisma.subscriptionPlan.findFirst({
+            where: { name: user?.userSubscriptions[0].subscriptionPlans.name }
         });
         if (!user) {
             throw new common_1.NotFoundException('User topilmadi');
         }
-        if (movie.subscriptionType === 'premium' &&
-            user.userSubscriptions[0].subscriptionPlans.name !== client_1.SubscriptionType.premium) {
+        if (movie.subscriptionType === client_1.SubscriptionType.premium &&
+            user.userSubscriptions[0].subscriptionPlans.name !== plans?.name) {
             throw new common_1.ForbiddenException('Premium obuna talab qilinadi');
         }
         return movie;

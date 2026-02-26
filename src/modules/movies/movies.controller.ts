@@ -122,8 +122,8 @@ export class MoviesController {
   }
 
   @Get('admin')
-  @Roles(Role.ADMIN, Role.SUPERADMIN, Role.USER)
-  @ApiOperation({ summary: `${Role.ADMIN}, ${Role.SUPERADMIN}, ${Role.USER}` })
+  @Roles(Role.ADMIN, Role.SUPERADMIN)
+  @ApiOperation({ summary: `${Role.ADMIN}, ${Role.SUPERADMIN}` })
   @ApiQuery({
     name: 'subscriptionType',
     required: false,

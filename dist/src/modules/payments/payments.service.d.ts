@@ -10,36 +10,36 @@ export declare class PaymentsService {
         data: {
             userSubscriptions: {
                 users: {
-                    username: string;
                     id: string;
+                    username: string;
                 };
                 subscriptionPlans: {
-                    name: string;
                     id: string;
+                    name: string;
                     price: Prisma.Decimal;
                     durationDays: number;
                 };
             } & {
                 id: string;
+                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 createdAt: Date;
                 updatedAt: Date;
                 user_id: string;
                 plan_id: string;
                 startDate: Date | null;
                 endDate: Date | null;
-                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 autoRenew: boolean;
             };
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            status: import("@prisma/client").$Enums.PaymentStatus;
-            userSubscriptionId: string;
             amount: Prisma.Decimal;
             paymentMethod: import("@prisma/client").$Enums.PaymentMethod;
             paymentDetails: Prisma.JsonValue;
+            status: import("@prisma/client").$Enums.PaymentStatus;
             externalTransactionId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            userSubscriptionId: string;
         };
     }>;
     findAll(): Promise<{
@@ -47,34 +47,34 @@ export declare class PaymentsService {
         data: ({
             userSubscriptions: {
                 users: {
-                    username: string;
                     id: string;
+                    username: string;
                 };
                 subscriptionPlans: {
-                    name: string;
                     id: string;
+                    name: string;
                 };
             } & {
                 id: string;
+                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 createdAt: Date;
                 updatedAt: Date;
                 user_id: string;
                 plan_id: string;
                 startDate: Date | null;
                 endDate: Date | null;
-                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 autoRenew: boolean;
             };
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            status: import("@prisma/client").$Enums.PaymentStatus;
-            userSubscriptionId: string;
             amount: Prisma.Decimal;
             paymentMethod: import("@prisma/client").$Enums.PaymentMethod;
             paymentDetails: Prisma.JsonValue;
+            status: import("@prisma/client").$Enums.PaymentStatus;
             externalTransactionId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            userSubscriptionId: string;
         })[];
         total: number;
     }>;
@@ -83,34 +83,34 @@ export declare class PaymentsService {
         data: {
             userSubscriptions: {
                 users: {
-                    username: string;
                     id: string;
+                    username: string;
                 };
                 subscriptionPlans: {
-                    name: string;
                     id: string;
+                    name: string;
                 };
             } & {
                 id: string;
+                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 createdAt: Date;
                 updatedAt: Date;
                 user_id: string;
                 plan_id: string;
                 startDate: Date | null;
                 endDate: Date | null;
-                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 autoRenew: boolean;
             };
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            status: import("@prisma/client").$Enums.PaymentStatus;
-            userSubscriptionId: string;
             amount: Prisma.Decimal;
             paymentMethod: import("@prisma/client").$Enums.PaymentMethod;
             paymentDetails: Prisma.JsonValue;
+            status: import("@prisma/client").$Enums.PaymentStatus;
             externalTransactionId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            userSubscriptionId: string;
         };
     }>;
     update(id: string, updatePaymentDto: UpdatePaymentDto): Promise<{
@@ -118,34 +118,34 @@ export declare class PaymentsService {
         data: {
             userSubscriptions: {
                 users: {
-                    username: string;
                     id: string;
+                    username: string;
                 };
                 subscriptionPlans: {
-                    name: string;
                     id: string;
+                    name: string;
                 };
             } & {
                 id: string;
+                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 createdAt: Date;
                 updatedAt: Date;
                 user_id: string;
                 plan_id: string;
                 startDate: Date | null;
                 endDate: Date | null;
-                status: import("@prisma/client").$Enums.SubscriptionStatus;
                 autoRenew: boolean;
             };
         } & {
             id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            status: import("@prisma/client").$Enums.PaymentStatus;
-            userSubscriptionId: string;
             amount: Prisma.Decimal;
             paymentMethod: import("@prisma/client").$Enums.PaymentMethod;
             paymentDetails: Prisma.JsonValue;
+            status: import("@prisma/client").$Enums.PaymentStatus;
             externalTransactionId: string | null;
+            createdAt: Date;
+            updatedAt: Date;
+            userSubscriptionId: string;
         };
     }>;
     remove(id: string): Promise<{

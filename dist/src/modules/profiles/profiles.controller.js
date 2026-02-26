@@ -43,7 +43,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfilesController.prototype, "myProfile", null);
 __decorate([
-    (0, common_1.Put)(':id'),
+    (0, common_1.Put)(''),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('avatar')),
     (0, swagger_1.ApiConsumes)('multipart/form-data'),
     (0, swagger_1.ApiBody)({ type: update_profile_dto_1.UpdateProfileDto }),

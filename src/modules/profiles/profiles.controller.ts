@@ -38,7 +38,7 @@ export class ProfilesController {
     return this.profilesService.findme(req['user']);
   }
 
-  @Put(':id')
+  @Put('')
   @UseInterceptors(FileInterceptor('avatar'))
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: UpdateProfileDto })
